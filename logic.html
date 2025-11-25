@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe to Receipt: The AI Logic Core</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Tech-Fresh -->
+    <!-- Background: Slate-50 (Light Neutral) -->
+    <!-- Primary: Emerald-600 (Freshness/Success) -->
+    <!-- Secondary: Indigo-600 (Intelligence/AI) -->
+    <!-- Accent: Rose-500 (Alerts/Waste) -->
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .phase-card { transition: all 0.3s ease; }
+        .phase-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .active-phase { border-color: #4f46e5; background-color: #eef2ff; }
+        
+        /* Chart Container Styling Constraints */
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .chart-wrapper { height: 350px; }
+        }
+    </style>
+
+    <!-- Application Structure Plan: 
+         The app is structured as a linear interactive pipeline (The "Logic Flow"). 
+         1. Header: High-level summary of the report's goal.
+         2. Navigation/Timeline: A clickable 5-stage process bar representing the specific phases defined in the source text.
+         3. Dynamic Workspace: The central area changes based on the selected phase.
+            - Phase 1 (Ingestion): Interactive text comparison (Raw vs Normalized).
+            - Phase 2 (Pantry): Interactive Chart.js visualization of "Rot Scores".
+            - Phase 3 (Constraints): Interactive toggle board to simulate filtering logic.
+            - Phase 4 (Planning): A visual "Chain-Meal" timeline showing ingredient reuse.
+            - Phase 5 (Feedback): A circular logic diagram using CSS.
+         4. Footer: Privacy notes.
+         Rationale: This structure transforms the linear text of the report into a step-by-step simulation, allowing users to "play" the role of the AI.
+    -->
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Header Section -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 font-bold text-xl">AI</div>
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-900">Recipe to Receipt <span class="text-slate-400 font-normal">| Logic Explorer</span></h1>
+                        <p class="text-xs text-slate-500">Interactive Spec Breakdown</p>
+                    </div>
+                </div>
+                <div class="hidden md:block text-sm text-slate-500">
+                    Source: <span class="font-mono text-indigo-600">ai_process_spec.md</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Intro / Dashboard Summary -->
+        <section class="mb-10 text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">From Crinkled Paper to Dinner</h2>
+            <p class="text-slate-600 leading-relaxed">
+                Explore the 5-stage technical pipeline that transforms unstructured receipt data into actionable, zero-waste meal plans. Click through the process flow below to see how the AI ingests, analyzes, filters, and plans.
+            </p>
+        </section>
+
+        <!-- Navigation / Pipeline Flow -->
+        <nav class="mb-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <!-- Phase 1 Button -->
+                <button onclick="setPhase(1)" id="btn-p1" class="phase-card active-phase border-2 border-transparent rounded-xl p-4 text-left bg-white shadow-sm focus:outline-none">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Phase 1</div>
+                    <div class="font-bold text-slate-800">Ingestion & OCR</div>
+                </button>
+                <!-- Phase 2 Button -->
+                <button onclick="setPhase(2)" id="btn-p2" class="phase-card border-2 border-transparent rounded-xl p-4 text-left bg-white shadow-sm focus:outline-none">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Phase 2</div>
+                    <div class="font-bold text-slate-800">Smart Pantry</div>
+                </button>
+                <!-- Phase 3 Button -->
+                <button onclick="setPhase(3)" id="btn-p3" class="phase-card border-2 border-transparent rounded-xl p-4 text-left bg-white shadow-sm focus:outline-none">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Phase 3</div>
+                    <div class="font-bold text-slate-800">Constraint Engine</div>
+                </button>
+                <!-- Phase 4 Button -->
+                <button onclick="setPhase(4)" id="btn-p4" class="phase-card border-2 border-transparent rounded-xl p-4 text-left bg-white shadow-sm focus:outline-none">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Phase 4</div>
+                    <div class="font-bold text-slate-800">Generative Plan</div>
+                </button>
+                <!-- Phase 5 Button -->
+                <button onclick="setPhase(5)" id="btn-p5" class="phase-card border-2 border-transparent rounded-xl p-4 text-left bg-white shadow-sm focus:outline-none">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Phase 5</div>
+                    <div class="font-bold text-slate-800">Feedback Loop</div>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Dynamic Content Area -->
+        <div id="workspace" class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden min-h-[500px]">
+            
+            <!-- Dynamic Injection Target -->
+            <div id="phase-content" class="p-6 md:p-10">
+                <!-- Content loaded via JS -->
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Visualization & Content Choices:
+         Phase 1: Side-by-side text comparison (HTML/CSS) to show "Dirty" vs "Clean" data. Clear visual contrast.
+         Phase 2: Chart.js Bar Chart. Visualization of "Rot Score" (1-10) is best done with a chart to show priority distribution.
+         Phase 3: Interactive Checkboxes (HTML Input). User simulates constraints (Vegan, No Blender) to see immediate text feedback.
+         Phase 4: Timeline/Flow (HTML Flexbox). Showing the "Chain-Meal" logic (Day 1 -> Day 3 connection) requires a linear visual layout.
+         Phase 5: Cycle Diagram (CSS Borders). Simple visual loop.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <script>
+        // --- Data & Content Definitions ---
+
+        const phases = {
+            1: {
+                title: "Phase 1: The Ingestion Layer",
+                subtitle: "OCR, Entity Extraction & Normalization",
+                description: "The process begins by converting a raw image into structured data. The AI must handle abbreviations, noise (tax lines), and variety identification.",
+                content: `
+                    <div class="grid md:grid-cols-2 gap-8 mt-8">
+                        <!-- Input Side -->
+                        <div class="bg-slate-100 rounded-xl p-6 border border-slate-200">
+                            <h3 class="text-sm font-bold text-slate-500 uppercase mb-4">Raw OCR Input (Noisy)</h3>
+                            <div class="font-mono text-sm space-y-3 text-slate-600">
+                                <p class="bg-white p-2 rounded shadow-sm border-l-4 border-rose-400">1. ORG AVCDO HASS 4CT $5.99</p>
+                                <p class="bg-white p-2 rounded shadow-sm border-l-4 border-rose-400">2. CKN BRST BNLS 2.5LB</p>
+                                <p class="bg-white p-2 rounded shadow-sm border-l-4 border-rose-400">3. KROGER MILK 1GAL</p>
+                                <p class="bg-white p-2 rounded shadow-sm border-l-4 border-slate-300 opacity-50">4. BATT AA 4PK (Non-Food)</p>
+                                <p class="bg-white p-2 rounded shadow-sm border-l-4 border-slate-300 opacity-50">5. TAX 8.25%</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Logic Arrow (Desktop) -->
+                        <div class="hidden md:flex items-center justify-center text-indigo-500">
+                            <div class="text-4xl">➔</div>
+                        </div>
+
+                        <!-- Output Side -->
+                        <div class="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
+                            <h3 class="text-sm font-bold text-indigo-600 uppercase mb-4">Normalized Entity Data</h3>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded shadow-sm flex justify-between items-center">
+                                    <div>
+                                        <span class="font-bold text-slate-800 block">Avocado</span>
+                                        <span class="text-xs text-slate-500">Variety: Hass | Attr: Organic</span>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Qty: 4</span>
+                                </div>
+                                <div class="bg-white p-3 rounded shadow-sm flex justify-between items-center">
+                                    <div>
+                                        <span class="font-bold text-slate-800 block">Chicken Breast</span>
+                                        <span class="text-xs text-slate-500">Type: Boneless | Unit: 2.5 lbs</span>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Protein</span>
+                                </div>
+                                <div class="bg-white p-3 rounded shadow-sm flex justify-between items-center">
+                                    <div>
+                                        <span class="font-bold text-slate-800 block">Milk</span>
+                                        <span class="text-xs text-slate-500">Brand: Store | Unit: 1 Gal</span>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Dairy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-sm text-yellow-800">
+                        <strong>Key Insight:</strong> The system automatically filters out non-food items like batteries and taxes to prevent "Hallucinated Meals."
+                    </div>
+                `
+            },
+            2: {
+                title: "Phase 2: Smart Pantry & Perishability",
+                subtitle: "Scoring Ingredients by Urgency",
+                description: "Not all food is equal. The AI assigns a 'Rot Score' (1-10) to prioritize what must be cooked first.",
+                renderChart: true, 
+                content: `
+                    <div class="grid lg:grid-cols-3 gap-8 mt-6">
+                        <div class="lg:col-span-2">
+                            <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <h3 class="text-sm font-bold text-slate-500 mb-4 text-center">Perishability Index (Rot Score)</h3>
+                                <div class="chart-wrapper">
+                                    <canvas id="rotChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-rose-50 border border-rose-100 rounded-lg">
+                                <h4 class="font-bold text-rose-700">High Priority (Score 8-10)</h4>
+                                <p class="text-xs text-rose-600 mt-1">Fresh Fish, Berries, Leafy Greens.</p>
+                                <p class="text-xs font-semibold mt-2">Action: Schedule in Days 1-3.</p>
+                            </div>
+                            <div class="p-4 bg-orange-50 border border-orange-100 rounded-lg">
+                                <h4 class="font-bold text-orange-700">Medium Priority (Score 4-7)</h4>
+                                <p class="text-xs text-orange-600 mt-1">Root Veg, Dairy, Hard Fruits.</p>
+                                <p class="text-xs font-semibold mt-2">Action: Flexible scheduling.</p>
+                            </div>
+                            <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-lg">
+                                <h4 class="font-bold text-emerald-700">Low Priority (Score 1-3)</h4>
+                                <p class="text-xs text-emerald-600 mt-1">Canned Goods, Pasta, Rice.</p>
+                                <p class="text-xs font-semibold mt-2">Action: Pantry Staples / Backup.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                title: "Phase 3: The Constraint Engine",
+                subtitle: "Filtering for Hardware & Dietary Needs",
+                description: "Before generating recipes, the AI filters the potential solution space based on user hardware and dietary restrictions.",
+                content: `
+                    <div class="grid md:grid-cols-3 gap-8 mt-8">
+                        <!-- Controls -->
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="bg-slate-100 p-5 rounded-xl">
+                                <h3 class="font-bold text-slate-700 mb-3">User Profile Simulation</h3>
+                                <label class="flex items-center space-x-3 mb-3 cursor-pointer">
+                                    <input type="checkbox" id="check-vegan" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500" onchange="updateConstraints()">
+                                    <span class="text-slate-700">Vegan Only</span>
+                                </label>
+                                <label class="flex items-center space-x-3 mb-3 cursor-pointer">
+                                    <input type="checkbox" id="check-blender" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500" checked onchange="updateConstraints()">
+                                    <span class="text-slate-700">Has Blender</span>
+                                </label>
+                                <label class="flex items-center space-x-3 cursor-pointer">
+                                    <input type="checkbox" id="check-novice" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500" onchange="updateConstraints()">
+                                    <span class="text-slate-700">Novice Cook (< 20 mins)</span>
+                                </label>
+                            </div>
+                            <p class="text-xs text-slate-500 italic">Toggle the checkboxes to see how the AI filters potential recipes.</p>
+                        </div>
+
+                        <!-- Results -->
+                        <div class="md:col-span-2">
+                            <h3 class="font-bold text-slate-700 mb-4">Potential Recipe Pool</h3>
+                            <div class="space-y-3" id="recipe-pool">
+                                <!-- Recipe Item -->
+                                <div class="recipe-card p-4 border rounded-lg shadow-sm flex justify-between items-center bg-white" data-tags="meat blender complex">
+                                    <div>
+                                        <span class="font-bold block">Creamy Chicken Soup</span>
+                                        <span class="text-xs text-slate-500">Req: Chicken, Blender | Time: 45m</span>
+                                    </div>
+                                    <span class="status-badge px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Match</span>
+                                </div>
+                                <!-- Recipe Item -->
+                                <div class="recipe-card p-4 border rounded-lg shadow-sm flex justify-between items-center bg-white" data-tags="vegan simple">
+                                    <div>
+                                        <span class="font-bold block">Avocado Toast</span>
+                                        <span class="text-xs text-slate-500">Req: Avocado, Bread | Time: 5m</span>
+                                    </div>
+                                    <span class="status-badge px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Match</span>
+                                </div>
+                                <!-- Recipe Item -->
+                                <div class="recipe-card p-4 border rounded-lg shadow-sm flex justify-between items-center bg-white" data-tags="meat simple">
+                                    <div>
+                                        <span class="font-bold block">Pan Seared Salmon</span>
+                                        <span class="text-xs text-slate-500">Req: Fish | Time: 15m</span>
+                                    </div>
+                                    <span class="status-badge px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Match</span>
+                                </div>
+                                <!-- Recipe Item -->
+                                <div class="recipe-card p-4 border rounded-lg shadow-sm flex justify-between items-center bg-white" data-tags="vegan blender complex">
+                                    <div>
+                                        <span class="font-bold block">Kale & Berry Smoothie Bowl</span>
+                                        <span class="text-xs text-slate-500">Req: Berries, Blender | Time: 25m</span>
+                                    </div>
+                                    <span class="status-badge px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Match</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            4: {
+                title: "Phase 4: Generative Planning & Logic",
+                subtitle: "Chain-Meal Logic & RAG",
+                description: "The 'Magic' layer. The AI uses RAG to find culinary frameworks and 'Chain-Meal' logic to ensure zero waste by linking ingredients across days.",
+                content: `
+                    <div class="mt-8">
+                        <h3 class="font-bold text-center text-indigo-700 mb-6 text-lg">The "Chain-Meal" Logic Visualization</h3>
+                        
+                        <!-- Timeline Container -->
+                        <div class="relative border-l-4 border-indigo-100 ml-6 space-y-10">
+                            
+                            <!-- Day 1 -->
+                            <div class="relative pl-8">
+                                <div class="absolute -left-3 top-0 w-6 h-6 bg-indigo-500 rounded-full border-4 border-white"></div>
+                                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-lg">Tuesday: Roast Chicken</h4>
+                                            <p class="text-sm text-slate-600 mt-1">Utilizes fresh Whole Chicken (High Perishability).</p>
+                                        </div>
+                                        <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-2 py-1 rounded">Main Event</span>
+                                    </div>
+                                    <div class="mt-3 p-2 bg-slate-50 rounded text-xs border border-slate-100">
+                                        <strong>Inventory Impact:</strong> Uses 1 Whole Chicken. <span class="text-emerald-600">Generates Leftovers.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Logic Connector -->
+                            <div class="relative pl-8">
+                                <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-100 inline-block">
+                                    <p class="text-xs font-mono text-indigo-700">Logic: IF (Leftovers > 0) THEN (Schedule Utilization Meal +2 Days)</p>
+                                </div>
+                            </div>
+
+                            <!-- Day 3 -->
+                            <div class="relative pl-8">
+                                <div class="absolute -left-3 top-0 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white"></div>
+                                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-300 transition">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-lg">Thursday: Chicken Salad</h4>
+                                            <p class="text-sm text-slate-600 mt-1">Utilizes Roasted Chicken leftovers + Fresh Greens.</p>
+                                        </div>
+                                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-1 rounded">Zero Waste</span>
+                                    </div>
+                                    <div class="mt-3 p-2 bg-slate-50 rounded text-xs border border-slate-100">
+                                        <strong>Inventory Impact:</strong> Clears leftovers. Uses Spinach (High Priority).
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="mt-10 grid md:grid-cols-2 gap-6">
+                            <div class="p-5 bg-slate-50 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-700 mb-2">RAG (Retrieval Augmented Generation)</h4>
+                                <p class="text-sm text-slate-600">The AI doesn't "hallucinate" a recipe. It retrieves a verified structure (e.g., "Salad Ratio") and fills the slots with your specific inventory items.</p>
+                            </div>
+                            <div class="p-5 bg-slate-50 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-700 mb-2">Generative Text</h4>
+                                <p class="text-sm text-slate-600">Standard: "Add cheese."</p>
+                                <p class="text-sm text-indigo-600 font-semibold">AI Output: "Sprinkle the Sargento Sharp Cheddar you bought."</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            5: {
+                title: "Phase 5: The Feedback Loop",
+                subtitle: "Learning & Re-Inventory",
+                description: "The system closes the loop by asking 'Did you cook this?' to keep the virtual pantry accurate.",
+                content: `
+                    <div class="flex flex-col items-center justify-center mt-8">
+                        <div class="relative w-full max-w-lg">
+                            <!-- Step 1 -->
+                            <div class="flex items-center mb-8">
+                                <div class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold z-10">1</div>
+                                <div class="ml-4 bg-white p-4 rounded-lg shadow border border-slate-200 flex-1">
+                                    <h4 class="font-bold">Post-Meal Check</h4>
+                                    <p class="text-sm text-slate-600">"Did you cook the Chicken Salad?"</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Branch -->
+                            <div class="flex justify-between w-full px-8 mb-4">
+                                <div class="text-center w-1/2 border-r border-slate-300 pr-4">
+                                    <span class="text-green-600 font-bold text-sm">YES</span>
+                                </div>
+                                <div class="text-center w-1/2 pl-4">
+                                    <span class="text-rose-600 font-bold text-sm">NO</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-6">
+                                <!-- Yes Result -->
+                                <div class="bg-green-50 p-4 rounded-lg border border-green-100 text-center">
+                                    <h4 class="font-bold text-green-800">Remove Items</h4>
+                                    <p class="text-xs text-green-700 mt-1">Items removed from Virtual Pantry.</p>
+                                </div>
+                                <!-- No Result -->
+                                <div class="bg-rose-50 p-4 rounded-lg border border-rose-100 text-center">
+                                    <h4 class="font-bold text-rose-800">Return to Pantry</h4>
+                                    <p class="text-xs text-rose-700 mt-1">Items kept. <br><strong>Rot Score Increased.</strong><br>Urgency: Critical.</p>
+                                </div>
+                            </div>
+
+                            <!-- Connecting Line logic visual only -->
+                            <div class="mt-6 text-center">
+                                <p class="text-xs text-slate-400 uppercase tracking-widest">System Updates Model</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // --- Chart Initialization Function ---
+        let rotChartInstance = null;
+
+        function initRotChart() {
+            const ctx = document.getElementById('rotChart');
+            if (!ctx) return;
+
+            // Destroy existing if any to prevent duplicates
+            if (rotChartInstance) {
+                rotChartInstance.destroy();
+            }
+
+            rotChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Berries (High)', 'Fish (High)', 'Dairy (Med)', 'Root Veg (Med)', 'Pasta (Low)', 'Cans (Low)'],
+                    datasets: [{
+                        label: 'Rot Score (1-10)',
+                        data: [9, 10, 6, 5, 2, 1],
+                        backgroundColor: [
+                            'rgba(225, 29, 72, 0.8)', // Rose-600
+                            'rgba(225, 29, 72, 0.8)',
+                            'rgba(249, 115, 22, 0.8)', // Orange-500
+                            'rgba(249, 115, 22, 0.8)',
+                            'rgba(16, 185, 129, 0.8)', // Emerald-500
+                            'rgba(16, 185, 129, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(225, 29, 72)',
+                            'rgb(225, 29, 72)',
+                            'rgb(249, 115, 22)',
+                            'rgb(249, 115, 22)',
+                            'rgb(16, 185, 129)',
+                            'rgb(16, 185, 129)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: { display: true, text: 'Urgency Score' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Urgency: ${context.raw}/10`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Phase Management ---
+
+        function setPhase(phaseId) {
+            // 1. Update Buttons
+            document.querySelectorAll('.phase-card').forEach(btn => {
+                btn.classList.remove('active-phase', 'ring-2', 'ring-indigo-500');
+                // Reset styles
+                btn.classList.add('bg-white'); 
+            });
+            const activeBtn = document.getElementById(`btn-p${phaseId}`);
+            activeBtn.classList.add('active-phase');
+
+            // 2. Inject Content
+            const data = phases[phaseId];
+            const container = document.getElementById('phase-content');
+            
+            container.innerHTML = `
+                <div class="animate-fade-in">
+                    <h2 class="text-2xl font-bold text-slate-900">${data.title}</h2>
+                    <h3 class="text-lg text-indigo-600 font-medium mb-4">${data.subtitle}</h3>
+                    <p class="text-slate-600 max-w-3xl mb-6">${data.description}</p>
+                    <hr class="border-slate-100">
+                    ${data.content}
+                </div>
+            `;
+
+            // 3. Initialize Interactions specific to phase
+            if (data.renderChart) {
+                setTimeout(initRotChart, 100); // Small delay to ensure DOM injection
+            }
+        }
+
+        // --- Constraint Logic (Phase 3) ---
+        
+        function updateConstraints() {
+            const vegan = document.getElementById('check-vegan')?.checked;
+            const blender = document.getElementById('check-blender')?.checked;
+            const novice = document.getElementById('check-novice')?.checked;
+
+            const cards = document.querySelectorAll('.recipe-card');
+            
+            cards.forEach(card => {
+                const tags = card.dataset.tags;
+                let valid = true;
+                let reasons = [];
+
+                // Logic: If vegan checked, and card has "meat", invalid
+                if (vegan && tags.includes('meat')) { valid = false; reasons.push("Contains Meat"); }
+                
+                // Logic: If NO blender checked, and card needs "blender", invalid
+                if (!blender && tags.includes('blender')) { valid = false; reasons.push("Needs Blender"); }
+                
+                // Logic: If Novice checked, and card is "complex", invalid
+                if (novice && tags.includes('complex')) { valid = false; reasons.push("Too Complex"); }
+
+                // Visual Update
+                const badge = card.querySelector('.status-badge');
+                if (valid) {
+                    card.classList.remove('opacity-40', 'bg-slate-50');
+                    card.classList.add('bg-white');
+                    badge.className = 'status-badge px-2 py-1 text-xs rounded-full bg-green-100 text-green-800';
+                    badge.textContent = 'Match';
+                } else {
+                    card.classList.add('opacity-40', 'bg-slate-50');
+                    card.classList.remove('bg-white');
+                    badge.className = 'status-badge px-2 py-1 text-xs rounded-full bg-rose-100 text-rose-800';
+                    badge.textContent = reasons.join(', ');
+                }
+            });
+        }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            setPhase(1); // Start at Phase 1
+        });
+
+    </script>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 py-8 text-center text-slate-400 text-sm border-t border-slate-200 mt-12">
+        <p>Recipe to Receipt Logic Visualization &copy; 2025</p>
+        <p class="mt-2 text-xs">Data Privacy: All receipt data is anonymized. Health data is encrypted at rest.</p>
+    </footer>
+
+</body>
+</html>
