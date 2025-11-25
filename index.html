@@ -1,14 +1,240 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>recipe-app</title>
-    <script type="module" crossorigin src="/assets/index-m7hRYnKc.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DQ3P1g1z.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe to Receipt | End Food Waste, Start Cooking</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Light background */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-10 bg-white border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-green-600 tracking-tight">
+                Recipe <span class="text-gray-900">to Receipt</span>
+            </a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#how-it-works" class="text-gray-600 hover:text-green-600 transition duration-150">How It Works</a>
+                <a href="#value" class="text-gray-600 hover:text-green-600 transition duration-150">Why Us</a>
+                <a href="#pricing" class="text-gray-600 hover:text-green-600 transition duration-150">Pricing</a>
+            </nav>
+            <a href="#pricing" class="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-150 transform hover:scale-105">
+                Get Started
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-16 pb-24 sm:pt-24 sm:pb-32 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6">
+                <span class="block text-gray-900">Stop Wasting Groceries.</span>
+                <span class="block text-green-600 mt-2">Start Cooking.</span>
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                Turn your forgotten grocery receipts into delicious, custom weekly meal plans. Save time, money, and stop staring into your fridge wondering what's for dinner.
+            </p>
+            <div class="mt-10 flex justify-center space-x-4">
+                <a href="#pricing" class="px-8 py-3 text-lg font-bold bg-green-600 text-white rounded-xl shadow-2xl shadow-green-400/50 hover:bg-green-700 transition duration-300 transform hover:scale-105">
+                    Start Your 7-Day Free Trial
+                </a>
+            </div>
+            <p class="mt-4 text-sm text-gray-500">Cancel anytime. No complicated contracts.</p>
+        </div>
+    </section>
+
+    <!-- Problem & Solution Overview -->
+    <section class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
+                <!-- Problem Statement -->
+                <div class="lg:col-span-6 mb-12 lg:mb-0">
+                    <span class="inline-block px-3 py-1 text-sm font-semibold text-red-700 bg-red-100 rounded-full mb-4">THE PROBLEM</span>
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">
+                        The $1,500 Silent Killer in Your Fridge.
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-600">
+                        The average American wastes **$1,500 per year** on groceries that spoil before they can be used. It's not just about money; it's the **decision fatigue** of constantly trying to align random ingredients with decent recipes.
+                    </p>
+                    <p class="mt-4 text-lg text-gray-600 font-semibold">
+                        You buy with good intentions, but you end up with food waste and zero dinner plan.
+                    </p>
+                </div>
+
+                <!-- Feature Illustration (Mockup) -->
+                <div class="lg:col-span-6">
+                    <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-xl border border-gray-100">
+                        <div class="flex items-center space-x-4 mb-6 border-b pb-4">
+                            <!-- Icon: Receipt Upload -->
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <h3 class="text-xl font-bold text-gray-900">No More Guesswork.</h3>
+                        </div>
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-3 text-2xl leading-none">&check;</span>
+                                <div>
+                                    <strong class="font-semibold">Contextual Recipes:</strong> Automatically match your *actual* pantry stock to a week of meals.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-3 text-2xl leading-none">&check;</span>
+                                <div>
+                                    <strong class="font-semibold">Pinterest Freedom:</strong> Stop scrolling for hours only to find you're missing the key ingredient.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-3 text-2xl leading-none">&check;</span>
+                                <div>
+                                    <strong class="font-semibold">Zero Waste Focus:</strong> Prioritize ingredients that are about to expire or bought in bulk.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 sm:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block px-3 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded-full mb-4">THE PROCESS</span>
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                It Takes Just 3 Steps to Your Meal Plan
+            </h2>
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- Step 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex justify-center mb-6">
+                        <!-- Icon: Upload -->
+                        <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    </div>
+                    <p class="text-sm font-bold text-green-600 mb-2">STEP 1</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Snap & Upload</h3>
+                    <p class="text-gray-600">Take a photo of your most recent grocery receipt. Our system instantly reads and inventories every item you bought.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex justify-center mb-6">
+                        <!-- Icon: Recipe/List -->
+                        <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <p class="text-sm font-bold text-green-600 mb-2">STEP 2</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Generate Meal Plan</h3>
+                    <p class="text-gray-600">Our AI crafts a custom, multi-day meal plan using your purchased items, factoring in your dietary preferences and skill level.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex justify-center mb-6">
+                        <!-- Icon: Fork/Spoon -->
+                        <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.094 5.235A2 2 0 0113.844 11H9.156a2 2 0 01-1.99 1.765L5 16m2 2l2.094 5.235A2 2 0 0013.844 23h5.004a2 2 0 001.99-1.765L22 18"></path></svg>
+                    </div>
+                    <p class="text-sm font-bold text-green-600 mb-2">STEP 3</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Eat Good & Save</h3>
+                    <p class="text-gray-600">Follow your plan, cook with confidence, and enjoy great food while minimizing waste and saving serious money.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Advantage Section -->
+    <section id="value" class="py-20 sm:py-28 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-indigo-700 bg-indigo-100 rounded-full mb-4">THE INTELLIGENCE</span>
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    Smarter Meal Plans, Not Fantasy Dishes
+                </h2>
+            </div>
+            
+            <div class="lg:grid lg:grid-cols-3 lg:gap-8">
+                <!-- Feature 1 -->
+                <div class="mb-8 lg:mb-0 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <!-- Icon: Brain -->
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1v-3.25m-7.25-.5c0 1.25.75 2.25 2.75 2.25s2.75-1 2.75-2.25v-2.5c0-1.25-.75-2.25-2.75-2.25s-2.75 1-2.75 2.25v2.5zM12 21.5c-2.761 0-5-2.239-5-5s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5z"></path></svg>
+                        <h3 class="text-lg font-semibold text-gray-900">Learns Your Patterns</h3>
+                    </div>
+                    <p class="mt-3 text-gray-600">The AI recognizes your shopping habits. It suggests meals you'll actually *want* to make, based on what you *have* made before.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="mb-8 lg:mb-0 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <!-- Icon: Restriction/Shield -->
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h3 class="text-lg font-semibold text-gray-900">Respects Restrictions</h3>
+                    </div>
+                    <p class="mt-3 text-gray-600">Input any allergies, diets (Keto, Vegan, etc.), or preferences. Your plans are always safe, compliant, and delicious.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex items-center space-x-4">
+                        <!-- Icon: Chef Hat -->
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 1.657-1.343 3-3 3S6 12.657 6 11V6h6v5zm-3 7v1a3 3 0 006 0v-1m-6 0h6m-3-4V6"></path></svg>
+                        <h3 class="text-lg font-semibold text-gray-900">Matches Your Skill</h3>
+                    </div>
+                    <p class="mt-3 text-gray-600">From beginner to pro, the AI only recommends recipes that fit your current cooking skill level—no 47-ingredient fantasy dishes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing / CTA Section -->
+    <section id="pricing" class="py-20 sm:py-28 bg-green-700">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl mb-6">
+                Stop Wasting $125/Month.
+            </h2>
+            <p class="text-xl text-green-200 max-w-2xl mx-auto mb-10">
+                The math is simple: **$9.99/month** beats throwing away **$125 worth of food** every month. This isn't an expense, it's an investment that pays for itself 12x over.
+            </p>
+
+            <div class="bg-white p-8 rounded-xl shadow-2xl inline-block">
+                <p class="text-5xl font-extrabold text-green-600">
+                    $9.99<span class="text-2xl font-medium text-gray-500">/month</span>
+                </p>
+                <p class="mt-2 text-gray-500">Billed Annually ($119.88/yr) or Monthly ($14.99/mo)</p>
+                
+                <div class="mt-6">
+                    <a href="#" class="px-12 py-4 text-xl font-bold bg-indigo-600 text-white rounded-xl shadow-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105 inline-flex items-center justify-center w-full sm:w-auto">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Start 7-Day Free Trial
+                    </a>
+                </div>
+                <p class="mt-4 text-sm text-gray-500">Commitment-free trial. Get your first meal plan in minutes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-2xl font-bold text-green-400 tracking-tight mb-4">Recipe to Receipt</p>
+            <nav class="space-x-4 text-sm text-gray-400">
+                <a href="#" class="hover:text-white transition duration-150">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition duration-150">Terms of Service</a>
+                <a href="#" class="hover:text-white transition duration-150">Contact</a>
+            </nav>
+            <p class="mt-6 text-sm text-gray-500">
+                &copy; 2025 Recipe to Receipt. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
 </html>
